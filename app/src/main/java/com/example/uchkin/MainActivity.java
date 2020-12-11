@@ -3,6 +3,7 @@ package com.example.uchkin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,28 +16,35 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.uchkin.UserStaticInfo.POSITION;
+import static com.example.uchkin.UserStaticInfo.users;
+
 public class MainActivity extends AppCompatActivity {
 ListView listView;
 Context context;
 LayoutInflater layoutInflater;
-List<User> users = new ArrayList<>();
-UserListAdapter userListAdapter;
+
+static UserListAdapter userListAdapter;
 FrameLayout UserPanel;
 TextView NameTextView, StateTextView, AgeTextView;
+
+    public static void UpdateList() {
+        userListAdapter.notifyDataSetChanged();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AddUsersInList();
+        new UserStaticInfo();
         Init();
     }
 
     private void AddUsersInList() {
-        users.add (new User ("Andrei", "Russia", 19, 0));
-        users.add (new User ("Andrei", "Russia", 19, 0));
-        users.add (new User ("Andrei", "Russia", 19, 0));
-        users.add (new User ("Andrei", "Russia", 19, 0));
     }
+
 
     private void Init() {
         UserPanel = findViewById(R.id.userPanel);
@@ -78,6 +86,7 @@ TextView NameTextView, StateTextView, AgeTextView;
         public long getItemId(int position) {
             return position;
         }
+
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
@@ -123,5 +132,15 @@ TextView NameTextView, StateTextView, AgeTextView;
         StateTextView.setText(item.getState());
         AgeTextView.setText(String.valueOf(item.getAge()));
     }
+    public void GoToUserProfile(int position)
+    {
+        Intent intent = new Intent(context,UserActivity.class);
+        intent.putExtra(POSITION, position);
+        startActivity(intent);
+    }
+    public  void Back(View view){
+        onBackPressed();
+    }
+
 
 }

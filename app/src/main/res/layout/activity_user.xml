@@ -7,7 +7,7 @@
     tools:context="UserActivity">
     <Button
         android:onClick="Back"
-        android:background="@drawable/ic_baseline_keyboard_backspace_24"
+        android:background="@drawable/back_round_smoke_top"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="50dp"
         android:layout_width="50dp"
@@ -34,5 +34,12 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+    <Button
+        android:onClick="Save"
+        android:text="@string/save"
+        android:background="@drawable/back_round_smoke_top"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 </FrameLayout>
 
