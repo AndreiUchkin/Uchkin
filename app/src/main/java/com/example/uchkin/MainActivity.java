@@ -26,10 +26,15 @@ LayoutInflater layoutInflater;
 
 static UserListAdapter userListAdapter;
 FrameLayout UserPanel;
-TextView NameTextView, StateTextView, AgeTextView;
+static TextView NameTextView;
+    static TextView StateTextView;
+    static TextView AgeTextView;
+    private int positionActiveUser;
 
-    public static void UpdateList() {
+
+    public static void UpdateListAndUserPanel(User user) {
         userListAdapter.notifyDataSetChanged();
+        InitPanel(user);
 
     }
 
@@ -71,6 +76,10 @@ TextView NameTextView, StateTextView, AgeTextView;
 
     }
 
+    public void EditUser(View view) {
+        GoToUserProfile(positionActiveUser);
+    }
+
     private class UserListAdapter extends BaseAdapter {
         @Override
         public int getCount() {
@@ -99,6 +108,7 @@ TextView NameTextView, StateTextView, AgeTextView;
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    positionActiveUser = position;
                     InitPanel(getItem(position));
                     UserVisibility( true);
                 }
@@ -127,7 +137,7 @@ TextView NameTextView, StateTextView, AgeTextView;
 
 
 
-    private void InitPanel(User item) {
+    private static void InitPanel(User item) {
         NameTextView.setText(item.getName());
         StateTextView.setText(item.getState());
         AgeTextView.setText(String.valueOf(item.getAge()));

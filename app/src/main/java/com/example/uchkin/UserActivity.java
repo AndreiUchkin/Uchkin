@@ -2,7 +2,6 @@ package com.example.uchkin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,7 +12,7 @@ import static com.example.uchkin.UserStaticInfo.users;
 public class UserActivity extends AppCompatActivity {
 
     private User activeUser;
-    EditText NameTextView, StateTextView;
+    EditText NameTextView, StateTextView, AgeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +28,16 @@ public class UserActivity extends AppCompatActivity {
     private void setUserInto() {
         NameTextView.setText(activeUser.getName());
         StateTextView.setText(activeUser.getState());
+        AgeTextView.setText(String.valueOf(activeUser.getAge()));
+
 
     }
 
     private void Init() {
         NameTextView = findViewById(R.id.NameTextView);
         StateTextView = findViewById(R.id.StateTextView);
+        AgeTextView = findViewById(R.id.AgeTextView);
+
 
     }
 
@@ -44,6 +47,16 @@ public class UserActivity extends AppCompatActivity {
     public void Save(View view) {
         activeUser.setName(NameTextView.getText().toString());
         activeUser.setState(StateTextView.getText().toString());
-        MainActivity.UpdateList();
+        activeUser.setAge(Integer.parseInt(AgeTextView.getText().toString()));
+        String age = AgeTextView.getText().toString();
+        try {
+            activeUser.setAge(Integer.parseInt(age));
+        }
+        catch (Exception NumberFormaException)
+        {
+            activeUser.setAge(activeUser.getAge());
+        }
+        MainActivity.UpdateListAndUserPanel(activeUser);
+        finish();
     }
 }
